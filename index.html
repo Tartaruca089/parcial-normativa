@@ -1,860 +1,502 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Normativa Aeronáutica — Práctica BdP 1er Parcial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulador RAAC 2do Parcial</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Práctica de preguntas multiple choice de Normativa Aeronáutica (RAAC 39, 43, 65, 91, 119, 121, 135 y 145).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-  :root{
-    --navy:#16233F;
-    --navy-light:#28406B;
-    --paper:#E9E7DE;
-    --paper-card:#FBFAF6;
-    --amber:#C7891F;
-    --amber-soft:#EFD9AE;
-    --green:#2F6D4F;
-    --green-soft:#DCEBE2;
-    --red:#AD3B2C;
-    --red-soft:#F3DED9;
-    --line:#C9C4B4;
-    --ink-faint:#7A7869;
-    --radius:2px;
-    --shadow: 0 1px 0 rgba(22,35,63,0.05), 0 8px 24px -12px rgba(22,35,63,0.25);
+/* Layout: una sola columna centrada (máx. 720px), como una hoja de examen; la matrícula "LV-" marca el progreso. */
+:root {
+  --bg: #eef1f5;
+  --paper: #ffffff;
+  --ink: #142033;
+  --muted: #586579;
+  --line: #d5dbe4;
+  --accent: #1d4f91;
+  --accent-ink: #ffffff;
+  --accent-soft: #e2eaf6;
+  --ok: #1d7a46;
+  --ok-soft: #e1f3e8;
+  --bad: #b3261e;
+  --bad-soft: #fbe4e2;
+  --warn: #8a5a00;
+  --warn-soft: #fbefd5;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1520; --paper: #162131; --ink: #e6ebf2; --muted: #9aa7b9; --line: #2a3a50;
+    --accent: #7fb0f0; --accent-ink: #0e1520; --accent-soft: #1c3150;
+    --ok: #5fcf8f; --ok-soft: #133224; --bad: #ff8a80; --bad-soft: #3a1a1a;
+    --warn: #f0c060; --warn-soft: #3a2e12; color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1520; --paper: #162131; --ink: #e6ebf2; --muted: #9aa7b9; --line: #2a3a50;
+  --accent: #7fb0f0; --accent-ink: #0e1520; --accent-soft: #1c3150;
+  --ok: #5fcf8f; --ok-soft: #133224; --bad: #ff8a80; --bad-soft: #3a1a1a;
+  --warn: #f0c060; --warn-soft: #3a2e12; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 16px/1.55 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+[hidden] { display: none !important; }
+.wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 20px; }
+h1, h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(2.2rem, 7vw, 3.2rem); }
+h2 { font-size: 1.9rem; }
+p { margin: 0; }
+.eyebrow { font: 600 .78rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.muted { color: var(--muted); }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 18px; min-width: 0; }
 
-  *{box-sizing:border-box;}
+/* Matrícula */
+.plate { display: inline-flex; align-items: center; gap: 0; font: 700 1.05rem/1 var(--font-display); letter-spacing: .08em;
+  border: 2px solid var(--ink); border-radius: 4px; padding: .3em .55em; font-variant-numeric: tabular-nums; }
+.plate b { color: var(--accent); }
 
-  html,body{
-    margin:0;
-    padding:0;
-    min-height:100%;
-    background:
-      radial-gradient(ellipse at top left, rgba(22,35,63,0.035), transparent 55%),
-      radial-gradient(ellipse at bottom right, rgba(199,137,31,0.05), transparent 50%),
-      var(--paper);
-    color:var(--navy);
-    font-family:'IBM Plex Sans', -apple-system, sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
+/* Inicio */
+.hero { display: grid; gap: 12px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .95rem; color: var(--muted); }
+.facts strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+legend { font-weight: 600; margin-bottom: 10px; padding: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chip span { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper);
+  font-size: .95rem; cursor: pointer; user-select: none; font-variant-numeric: tabular-nums; }
+.chip input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.custom { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: .95rem; }
+.custom input { width: 6em; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; }
+.temas .chip span { font-size: .88rem; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.hint { font-size: .85rem; color: var(--muted); }
+kbd { font: 500 .8em var(--font-mono); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 6px; background: var(--bg); color: var(--ink); }
 
-  /* faint paper grain via repeating lines */
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background-image: repeating-linear-gradient(
-      0deg, rgba(22,35,63,0.018) 0px, rgba(22,35,63,0.018) 1px,
-      transparent 1px, transparent 3px
-    );
-    mix-blend-mode:multiply;
-    z-index:0;
-  }
+/* Botones */
+button { font: inherit; cursor: pointer; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); padding: 11px 20px; border-radius: 8px; font-weight: 600; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.link { background: none; border: 0; color: var(--muted); padding: 6px 4px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-  .wrap{
-    position:relative;
-    z-index:1;
-    max-width:720px;
-    margin:0 auto;
-    padding:28px 18px 60px;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-  }
+/* Quiz */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.score { font: 500 .9rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.score .ok { color: var(--ok); } .score .bad { color: var(--bad); }
+.bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s ease; }
+.qtext { font-size: 1.2rem; font-weight: 600; line-height: 1.4; }
+.opts { display: grid; gap: 10px; }
+.opt { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: start; text-align: left; width: 100%;
+  background: var(--paper); color: var(--ink); border: 2px solid var(--line); border-radius: var(--radius); padding: 12px 14px; line-height: 1.45; }
+.opt .letter { font: 700 1.05rem/1.4 var(--font-display); text-transform: uppercase; display: inline-grid; place-items: center;
+  width: 1.7em; height: 1.7em; border-radius: 6px; background: var(--bg); color: var(--ink); }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt.sel .letter { background: var(--accent); color: var(--accent-ink); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--ok); background: var(--ok-soft); }
+.opt.correct .letter { background: var(--ok); color: var(--paper); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt.wrong .letter { background: var(--bad); color: var(--paper); }
+.opt.dim { opacity: .6; }
+.feedback { border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 6px; border-left: 5px solid; }
+.feedback.ok { background: var(--ok-soft); border-color: var(--ok); }
+.feedback.bad { background: var(--bad-soft); border-color: var(--bad); }
+.feedback strong { font: 700 1.35rem/1 var(--font-display); letter-spacing: .02em; }
+.feedback.ok strong { color: var(--ok); } .feedback.bad strong { color: var(--bad); }
+.note { font-size: .92rem; }
+.badge { display: inline-block; font: 600 .72rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .08em;
+  padding: 4px 8px; border-radius: 4px; background: var(--warn-soft); color: var(--warn); }
+.actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-  header.masthead{
-    border-bottom:2px solid var(--navy);
-    padding-bottom:14px;
-    margin-bottom:24px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:12px;
-  }
-  header.masthead .brand{
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-  }
-  header.masthead .brand .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--amber);
-    font-weight:600;
-  }
-  header.masthead .brand h1{
-    font-family:'IBM Plex Serif', serif;
-    font-size:22px;
-    font-weight:600;
-    margin:0;
-    letter-spacing:-0.01em;
-  }
-  header.masthead .folio{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--ink-faint);
-    text-align:right;
-    line-height:1.5;
-    white-space:nowrap;
-  }
-
-  main{flex:1; display:flex; flex-direction:column;}
-
-  /* ---------- Card ---------- */
-  .card{
-    background:var(--paper-card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    position:relative;
-    overflow:hidden;
-  }
-  .card::before{
-    /* left margin rule, like a form/dossier */
-    content:"";
-    position:absolute;
-    top:0; bottom:0; left:44px;
-    width:1px;
-    background:rgba(22,35,63,0.08);
-    display:none;
-  }
-
-  /* ---------- Start screen ---------- */
-  #screen-start .card{padding:30px 26px 28px;}
-  #screen-start p.lede{
-    font-family:'IBM Plex Serif', serif;
-    font-size:16.5px;
-    line-height:1.6;
-    color:var(--navy);
-    margin:0 0 22px;
-  }
-  #screen-start p.lede b{color:var(--amber);}
-
-  .field-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    margin-bottom:10px;
-    display:block;
-  }
-
-  .count-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:8px;
-    margin-bottom:26px;
-  }
-  .count-btn{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:14px;
-    font-weight:600;
-    padding:12px 4px;
-    border:1px solid var(--line);
-    background:var(--paper);
-    color:var(--navy);
-    border-radius:var(--radius);
-    cursor:pointer;
-    transition:all .12s ease;
-  }
-  .count-btn:hover{border-color:var(--navy-light);}
-  .count-btn.active{
-    background:var(--navy);
-    border-color:var(--navy);
-    color:var(--paper-card);
-  }
-
-  .start-btn{
-    width:100%;
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:15px;
-    font-weight:600;
-    letter-spacing:.02em;
-    padding:15px 20px;
-    background:var(--navy);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius);
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    transition:background .12s ease;
-  }
-  .start-btn:hover{background:var(--navy-light);}
-  .start-btn svg{width:16px;height:16px;flex:none;}
-
-  .meta-row{
-    display:flex;
-    justify-content:space-between;
-    margin-top:16px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--ink-faint);
-  }
-
-  /* ---------- Quiz screen ---------- */
-  #screen-quiz .card{padding:0;}
-
-  .progress-strip{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:16px 24px;
-    border-bottom:1px solid var(--line);
-  }
-  .progress-strip .folio-num{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    font-weight:600;
-    color:var(--navy);
-    white-space:nowrap;
-  }
-  .progress-track{
-    flex:1;
-    height:4px;
-    background:rgba(22,35,63,0.08);
-    border-radius:2px;
-    overflow:hidden;
-  }
-  .progress-fill{
-    height:100%;
-    background:var(--amber);
-    width:0%;
-    transition:width .25s ease;
-  }
-  .score-chip{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    font-weight:600;
-    color:var(--green);
-    white-space:nowrap;
-  }
-
-  .question-area{
-    padding:26px 26px 8px;
-  }
-  .q-number{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--amber);
-    font-weight:600;
-    margin-bottom:8px;
-  }
-  .q-text{
-    font-family:'IBM Plex Serif', serif;
-    font-size:19px;
-    line-height:1.45;
-    color:var(--navy);
-    margin:0 0 24px;
-  }
-
-  .options{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    padding:0 26px 26px;
-  }
-  .opt{
-    display:flex;
-    align-items:flex-start;
-    gap:12px;
-    text-align:left;
-    width:100%;
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:13px 16px;
-    cursor:pointer;
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14.5px;
-    line-height:1.5;
-    color:var(--navy);
-    transition:border-color .12s ease, background .12s ease, transform .06s ease;
-  }
-  .opt:hover:not(:disabled){border-color:var(--navy-light); background:#fff;}
-  .opt:active:not(:disabled){transform:scale(0.996);}
-  .opt .letter{
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:700;
-    font-size:13px;
-    color:var(--ink-faint);
-    border:1px solid var(--line);
-    background:#fff;
-    border-radius:50%;
-    width:22px;height:22px;
-    flex:none;
-    display:flex;align-items:center;justify-content:center;
-    margin-top:1px;
-  }
-  .opt:disabled{cursor:default;}
-
-  .opt.correct{
-    background:var(--green-soft);
-    border-color:var(--green);
-  }
-  .opt.correct .letter{
-    background:var(--green);
-    border-color:var(--green);
-    color:#fff;
-  }
-  .opt.wrong{
-    background:var(--red-soft);
-    border-color:var(--red);
-  }
-  .opt.wrong .letter{
-    background:var(--red);
-    border-color:var(--red);
-    color:#fff;
-  }
-  .opt.dim{opacity:.55;}
-
-  .feedback-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    padding:16px 26px 24px;
-    min-height:26px;
-  }
-  .feedback-text{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:.03em;
-  }
-  .feedback-text.ok{color:var(--green);}
-  .feedback-text.no{color:var(--red);}
-
-  .next-btn{
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14px;
-    font-weight:600;
-    padding:11px 22px;
-    background:var(--navy);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius);
-    cursor:pointer;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity .15s ease, background .12s ease;
-  }
-  .next-btn.show{opacity:1; pointer-events:auto;}
-  .next-btn:hover{background:var(--navy-light);}
-
-  /* stamp */
-  .stamp{
-    position:absolute;
-    top:22px; right:22px;
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:700;
-    font-size:13px;
-    letter-spacing:.08em;
-    padding:7px 14px;
-    border:2px solid currentColor;
-    border-radius:4px;
-    transform:rotate(-9deg) scale(0.6);
-    opacity:0;
-    pointer-events:none;
-    transition:transform .28s cubic-bezier(.2,1.4,.4,1), opacity .2s ease;
-  }
-  .stamp.show{
-    transform:rotate(-9deg) scale(1);
-    opacity:0.92;
-  }
-  .stamp.ok{color:var(--green);}
-  .stamp.no{color:var(--red);}
-
-  /* ---------- Results screen ---------- */
-  #screen-results .card{padding:32px 26px 28px;}
-  .result-seal{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    padding-bottom:22px;
-    margin-bottom:22px;
-    border-bottom:1px dashed var(--line);
-  }
-  .result-seal .ring{
-    width:104px;height:104px;
-    border-radius:50%;
-    border:3px solid var(--navy);
-    display:flex;align-items:center;justify-content:center;
-    flex-direction:column;
-    margin-bottom:16px;
-    position:relative;
-  }
-  .result-seal .ring.pass{border-color:var(--green); color:var(--green);}
-  .result-seal .ring.fail{border-color:var(--red); color:var(--red);}
-  .result-seal .ring .pct{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:24px;
-    font-weight:700;
-    color:var(--navy);
-  }
-  .result-seal .ring.pass .pct{color:var(--green);}
-  .result-seal .ring.fail .pct{color:var(--red);}
-  .result-seal .ring .pct-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:9px;
-    letter-spacing:.08em;
-    color:var(--ink-faint);
-    text-transform:uppercase;
-  }
-  .result-seal .verdict{
-    font-family:'IBM Plex Serif', serif;
-    font-size:20px;
-    font-weight:600;
-    margin:0 0 6px;
-  }
-  .result-seal .verdict.pass{color:var(--green);}
-  .result-seal .verdict.fail{color:var(--red);}
-  .result-seal .subline{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12.5px;
-    color:var(--ink-faint);
-  }
-
-  .review-title{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    margin:0 0 12px;
-  }
-  .review-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    max-height:340px;
-    overflow-y:auto;
-    padding-right:4px;
-    margin-bottom:24px;
-  }
-  .review-item{
-    border:1px solid var(--line);
-    border-left:3px solid var(--red);
-    border-radius:var(--radius);
-    padding:12px 14px;
-    background:var(--paper);
-  }
-  .review-item .rq{
-    font-family:'IBM Plex Serif', serif;
-    font-size:14px;
-    color:var(--navy);
-    margin:0 0 8px;
-    line-height:1.4;
-  }
-  .review-item .ra{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    line-height:1.6;
-  }
-  .review-item .ra .you{color:var(--red);}
-  .review-item .ra .ok{color:var(--green);}
-  .all-correct{
-    font-family:'IBM Plex Serif', serif;
-    font-size:15px;
-    color:var(--green);
-    text-align:center;
-    padding:18px 0 24px;
-  }
-
-  .result-actions{
-    display:flex;
-    gap:10px;
-  }
-  .result-actions button{
-    flex:1;
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14px;
-    font-weight:600;
-    padding:13px 16px;
-    border-radius:var(--radius);
-    cursor:pointer;
-    border:1px solid var(--navy);
-    transition:all .12s ease;
-  }
-  .btn-primary{background:var(--navy); color:#fff;}
-  .btn-primary:hover{background:var(--navy-light);}
-  .btn-ghost{background:transparent; color:var(--navy);}
-  .btn-ghost:hover{background:rgba(22,35,63,0.06);}
-
-  .hidden{display:none !important;}
-
-  footer.foot{
-    text-align:center;
-    margin-top:26px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    color:var(--ink-faint);
-    letter-spacing:.03em;
-  }
-
-  @media (max-width:480px){
-    .count-grid{grid-template-columns:repeat(3,1fr);}
-    .q-text{font-size:17px;}
-    header.masthead{flex-direction:column; align-items:flex-start; gap:6px;}
-    header.masthead .folio{text-align:left;}
-  }
-
-  /* keyboard focus visibility */
-  button:focus-visible{
-    outline:2px solid var(--amber);
-    outline-offset:2px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{transition:none !important; animation:none !important;}
-  }
+/* Resultado */
+.verdict { display: grid; gap: 10px; justify-items: start; }
+.stamp { font: 700 clamp(2.2rem, 9vw, 3.4rem)/1 var(--font-display); letter-spacing: .04em; text-transform: uppercase;
+  border: 4px solid currentColor; border-radius: 8px; padding: .12em .4em; transform: rotate(-2deg); }
+.stamp.ok { color: var(--ok); } .stamp.bad { color: var(--bad); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 2px; }
+.stat b { font: 700 1.9rem/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: .85rem; color: var(--muted); }
+.review { display: grid; gap: 12px; }
+.review-item { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 6px; font-size: .95rem; min-width: 0; }
+.review-item .q { font-weight: 600; }
+.review-item .mine { color: var(--bad); }
+.review-item .good { color: var(--ok); }
+@media (max-width: 480px) {
+  .card { padding: 18px; }
+  .qtext { font-size: 1.08rem; }
+  .stats { grid-template-columns: 1fr 1fr 1fr; }
+  .stat b { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<div class="wrap">
+<main class="wrap">
 
-  <header class="masthead">
-    <div class="brand">
-      <span class="eyebrow">UTN Haedo · Ing. Aeroespacial</span>
-      <h1>Normativa Aeronáutica</h1>
+  <!-- INICIO -->
+  <section id="inicio" class="wrap" aria-labelledby="t-inicio">
+    <header class="hero">
+      <span class="plate">LV-<b>RAAC</b></span>
+      <h1 id="t-inicio">Normativa Aeronáutica · 2do Parcial</h1>
+      <p class="muted">Practicá las preguntas modelo. Las preguntas y las opciones salen mezcladas cada vez. Se aprueba con 60% o más.</p>
+      <div class="facts">
+        <span><strong id="f-total">0</strong> preguntas</span>
+        <span><strong id="f-temas">0</strong> temas</span>
+        <span>Partes 39 · 43 · 65 · 91 · 119 · 121 · 135 · 145</span>
+      </div>
+    </header>
+
+    <form id="form-inicio" class="card">
+      <fieldset>
+        <legend>¿Cuántas preguntas?</legend>
+        <div class="chips" id="cantidades"></div>
+        <label class="custom" for="cant-custom">o elegí un número:
+          <input type="number" id="cant-custom" min="1" inputmode="numeric" placeholder="ej. 15">
+        </label>
+      </fieldset>
+      <fieldset class="temas">
+        <legend>Temas</legend>
+        <div class="chips" id="temas"></div>
+        <div class="row"><button type="button" class="btn link" id="temas-todos">Marcar todos</button><button type="button" class="btn link" id="temas-ninguno">Desmarcar todos</button></div>
+      </fieldset>
+      <div class="row">
+        <button type="submit" class="btn" id="btn-empezar">Empezar</button>
+        <span class="hint" id="resumen-inicio"></span>
+      </div>
+      <p class="hint">Atajos: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> (o <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd>, o las flechas) para elegir, <kbd>Enter</kbd> para responder y <kbd>Enter</kbd> otra vez para pasar a la siguiente.</p>
+    </form>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="wrap" hidden aria-live="polite">
+    <div class="topbar">
+      <span class="plate" id="q-plate">LV-<b>01</b>/20</span>
+      <span class="score" id="q-score"></span>
     </div>
-    <div class="folio">BdP — 1er Parcial<br>Banco de 75 preguntas</div>
-  </header>
-
-  <main>
-
-    <!-- START -->
-    <section id="screen-start">
-      <div class="card">
-        <p class="lede">Practicá el banco de preguntas de <b>Normativa Aeronáutica</b> antes del parcial. Las preguntas y opciones aparecen en orden aleatorio en cada intento.</p>
-
-        <span class="field-label">Cantidad de preguntas</span>
-        <div class="count-grid" id="count-grid">
-          <button class="count-btn" data-n="10">10</button>
-          <button class="count-btn" data-n="20">20</button>
-          <button class="count-btn" data-n="30">30</button>
-          <button class="count-btn" data-n="50">50</button>
-          <button class="count-btn active" data-n="75">75</button>
-        </div>
-
-        <button class="start-btn" id="btn-start">
-          Comenzar práctica
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </button>
-
-        <div class="meta-row">
-          <span id="bank-size">75 preguntas cargadas</span>
-          <span>Modo estudio · feedback inmediato</span>
-        </div>
+    <div class="bar" aria-hidden="true"><i id="q-bar"></i></div>
+    <article class="card">
+      <div class="row" style="justify-content:space-between">
+        <span class="eyebrow" id="q-tema"></span>
+        <span class="badge" id="q-badge" hidden></span>
       </div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="screen-quiz" class="hidden">
-      <div class="card" style="position:relative;">
-        <div class="stamp" id="stamp">APROBADO</div>
-
-        <div class="progress-strip">
-          <span class="folio-num" id="folio-num">Legajo 001/075</span>
-          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-          <span class="score-chip" id="score-chip">0 / 0</span>
-        </div>
-
-        <div class="question-area">
-          <div class="q-number" id="q-number">PREGUNTA 1</div>
-          <p class="q-text" id="q-text">—</p>
-        </div>
-
-        <div class="options" id="options"></div>
-
-        <div class="feedback-row">
-          <span class="feedback-text" id="feedback-text"></span>
-          <button class="next-btn" id="btn-next">Siguiente →</button>
-        </div>
+      <p class="qtext" id="q-texto"></p>
+      <div class="opts" id="q-opts" role="radiogroup" aria-labelledby="q-texto"></div>
+      <div id="q-feedback" class="feedback" hidden></div>
+      <div class="actions">
+        <button type="button" class="btn link" id="btn-salir">Terminar ahora</button>
+        <button type="button" class="btn" id="btn-accion" disabled>Responder</button>
       </div>
-    </section>
+    </article>
+  </section>
 
-    <!-- RESULTS -->
-    <section id="screen-results" class="hidden">
-      <div class="card">
-        <div class="result-seal">
-          <div class="ring" id="result-ring">
-            <span class="pct" id="result-pct">0%</span>
-            <span class="pct-label">correctas</span>
-          </div>
-          <p class="verdict" id="result-verdict">—</p>
-          <p class="subline" id="result-subline">—</p>
-        </div>
-
-        <div id="review-wrap">
-          <p class="review-title">Preguntas para repasar</p>
-          <div class="review-list" id="review-list"></div>
-        </div>
-
-        <div class="result-actions">
-          <button class="btn-ghost" id="btn-retry">Repetir estas mismas</button>
-          <button class="btn-primary" id="btn-restart">Nueva práctica</button>
-        </div>
+  <!-- RESULTADO -->
+  <section id="resultado" class="wrap" hidden aria-labelledby="t-res">
+    <article class="card">
+      <div class="verdict">
+        <span class="eyebrow" id="t-res">Resultado</span>
+        <span class="stamp" id="r-stamp">Aprobado</span>
+        <p id="r-frase"></p>
       </div>
-    </section>
+      <div class="stats">
+        <div class="stat"><b id="r-pct">0%</b><span>nota</span></div>
+        <div class="stat"><b id="r-ok">0</b><span>correctas</span></div>
+        <div class="stat"><b id="r-bad">0</b><span>incorrectas</span></div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" id="btn-repetir">Practicar de nuevo</button>
+        <button type="button" class="btn ghost" id="btn-falladas">Repasar solo las incorrectas</button>
+        <button type="button" class="btn ghost" id="btn-config">Cambiar cantidad o temas</button>
+      </div>
+    </article>
+    <article class="card" id="r-review-card">
+      <h2>Para repasar</h2>
+      <div class="review" id="r-review"></div>
+    </article>
+  </section>
 
-  </main>
+</main>
 
-  <footer class="foot">Material de estudio no oficial · Basado en el apunte "NA_BdP_1er_Parcial" · UTN FRH</footer>
-</div>
-
+<script src="preguntas.js"></script>
 <script>
-const QUESTIONS = [{"id": 1, "question": "Causales de pérdida del Certificado de Aeronavegabilidad:", "options": {"a": "Incumplimiento de una Directiva de Aeronavegabilidad.", "b": "Incumplimiento de un Boletín de Servicio del fabricante.", "c": "La aeronave sufre una falla en uno de sus sistemas."}, "correct": "a"}, {"id": 2, "question": "¿Para qué se crea el organismo de Aviación Civil Internacional?", "options": {"a": "Para controlar cada país signatario del convenio.", "b": "Para garantizar que la Aviación Civil Internacional se desarrolla de manera segura y sistemática.", "c": "Para garantizar que la Aviación Civil y Militar Internacional se desarrolle en forma segura."}, "correct": "b"}, {"id": 3, "question": "¿Qué certificados, entre otros documentos, se deben tener a bordo de una aeronave?", "options": {"a": "Certificado Tipo y Certificado de Aeronavegabilidad.", "b": "Certificado Tipo y Certificado de Matriculación.", "c": "Certificado de Aeronavegabilidad y Matriculación."}, "correct": "c"}, {"id": 4, "question": "Una aeronave pública se usa, por ejemplo:", "options": {"a": "Para servicio de ambulancia sin costo para el usuario con una aeronave “contratada por una gobernación”.", "b": "Para servicio de ambulancia sin costo para el usuario con una aeronave de la gobernación.", "c": "Para servicio de ambulancia sin costo para el usuario con una aeronave de una gobernación… para apoyo a la zona."}, "correct": "b"}, {"id": 5, "question": "Las funciones aeronáuticas desempeñadas en superficie:", "options": {"a": "Deben ser avaladas por un Certificado de Idoneidad.", "b": "Deben ser avaladas por un Certificado de Propiedad.", "c": "Deben ser avaladas por un Certificado de Aeronavegabilidad."}, "correct": "a"}, {"id": 6, "question": "¿Cuáles de los siguientes cambios requieren emisión de un nuevo Certificado Tipo?", "options": {"a": "La modificación o agregado de sistemas o equipos radioeléctricos que afecten a la performance de la aeronave.", "b": "Instalación de equipos de rociado para fumigación.", "c": "La modificación propuesta para un motor de aeronave afecte su principio de operación."}, "correct": "c"}, {"id": 7, "question": "Un dirigible es:", "options": {"a": "Aerodino.", "b": "Aerostato.", "c": "Globo."}, "correct": "b"}, {"id": 8, "question": "¿Qué documentación, entre otras, debe llevar a bordo obligatoriamente?", "options": {"a": "Manual de mantenimiento.", "b": "Catálogo de partes.", "c": "Manual de vuelo."}, "correct": "c"}, {"id": 9, "question": "Una persona que no sea el fabricante puede realizar:", "options": {"a": "Una alteración.", "b": "Un cambio.", "c": "Una modificación."}, "correct": "a"}, {"id": 10, "question": "Aviación general:", "options": {"a": "Son todas las operaciones de Aviación Civil que no sean los Servicios Aéreos Regulares ni operaciones regulares de Transporte Aéreo por remuneración o arrendamiento y Trabajo Aéreo.", "b": "Son todas las operaciones de Aviación Civil y Militar que no sean los Servicios Aéreos Regulares ni no regulares de Transporte Aéreo por remuneración o arrendamiento y Trabajo Aéreo.", "c": "Son todas las operaciones de Aviación Civil que no sean los Servicios Aéreos Regulares por remuneración o arrendamiento y Trabajo Aéreo."}, "correct": "a"}, {"id": 11, "question": "En las palabras “alteración”, “cambio” o “modificación”, el aditamento mayor:", "options": {"a": "Comprende a aviones mayores de 30 años de antigüedad.", "b": "Comprende a aviones mayores de 3700 kg.", "c": "Representa afectación a la aeronavegabilidad."}, "correct": "c"}, {"id": 12, "question": "En la definición de aeronave, se excluye a:", "options": {"a": "Los aparatos de diseño experimental.", "b": "Aquellos aparatos que utilizan el efecto suelo.", "c": "Los aparatos de alas basculantes."}, "correct": "b"}, {"id": 13, "question": "Aeronavegabilidad significa:", "options": {"a": "La aptitud…", "b": "…", "c": "La aptitud técnica y legal que deberá tener una aeronave para volar en condiciones de operación segura."}, "correct": "c"}, {"id": 14, "question": "Cada solicitante de una aprobación de fabricación de partes debe hacer las inspecciones y ensayos necesarios para determinar:", "options": {"a": "Que las partes están en conformidad con los planos de diseño que se guardan en la DNA provistos por la fábrica de la parte en cuestión.", "b": "Que las partes están en conformidad con los planos de diseño de la fábrica de la aeronave en la que se va a instalar.", "c": "Que las partes están en conformidad con los planos de diseño de la fábrica del producto que se va a realizar."}, "correct": "c"}, {"id": 15, "question": "En la clasificación de aeronave, se excluye a:", "options": {"a": "Barriletes.", "b": "Hovercraft.", "c": "Máquinas que remedan el aleteo de las aves."}, "correct": "b"}, {"id": 16, "question": "Un Permiso Especial de Vuelo sirve:", "options": {"a": "Para que una aeronave pueda actuar en un festival aéreo.", "b": "Para que una aeronave pueda sobrevolar una zona poblada.", "c": "Para traslado de aeronave para ejecutar el adecuado mantenimiento."}, "correct": "c"}, {"id": 17, "question": "La Autorización de Orden Técnica Estándar:", "options": {"a": "Es transferible.", "b": "Es transferible, luego de una inspección de la ANAC.", "c": "Es intransferible."}, "correct": "c"}, {"id": 18, "question": "Constructor aficionado representa:", "options": {"a": "El que construye un modelo de aeronave de una sola plaza.", "b": "El que construye un modelo de aeronave para investigación y desarrollo.", "c": "El que construye un modelo de aeronave sin fines comerciales."}, "correct": "c"}, {"id": 19, "question": "En las aprobaciones de aeronavegabilidad para exportación, se define producto clase I a:", "options": {"a": "Alas.", "b": "Motor de aeronaves.", "c": "Hélices y fuselajes."}, "correct": "b"}, {"id": 20, "question": "Un fabricante después de obtener el Certificado Tipo puede realizar:", "options": {"a": "Una alteración.", "b": "Un cambio.", "c": "Una modificación."}, "correct": "c"}, {"id": 21, "question": "El Certificado Tipo Provisorio Clase I tiene una vigencia de:", "options": {"a": "6 meses.", "b": "12 meses.", "c": "24 meses."}, "correct": "c"}, {"id": 22, "question": "La investigación de accidentes de aviación:", "options": {"a": "Tiene como fin reprimir con prisión a los culpables.", "b": "Tiene como fin determinar las causas e informar a la justicia.", "c": "Tiene como fin determinar las causas para evitar su repetición."}, "correct": "c"}, {"id": 23, "question": "Un Certificado Tipo es emitido para:", "options": {"a": "Un conjunto componente de una aeronave.", "b": "Una hélice para motor de aeronave.", "c": "Un equipo radioeléctrico."}, "correct": "b"}, {"id": 24, "question": "¿A qué tipo de aeronaves les es otorgado un Certificado de Aeronavegabilidad Especial:", "options": {"a": "A las que realicen operaciones de transporte aéreo no regular.", "b": "A las que realicen operaciones de fumigación aérea.", "c": "A las que están afectadas a escuelas de vuelo."}, "correct": "b"}, {"id": 25, "question": "Para realizar un vuelo con un Permiso Especial de Vuelo es necesario:", "options": {"a": "Utilizar la tripulación mínima.", "b": "Utilizar la tripulación mínima y tanques de combustible a pleno.", "c": "Utilizar el combustible mínimo que sea requerido para el vuelo…"}, "correct": "a"}, {"id": 26, "question": "Autorización de Orden Técnica Estándar:", "options": {"a": "Es un mínimo cumplimiento de los estándares para artículos específicos.", "b": "Es una autorización para fabricar trenes de aterrizaje de un avión.", "c": "Es un mínimo cumplimiento de los requerimientos indicados en un plano del fabricante de la aeronave."}, "correct": "a"}, {"id": 27, "question": "Los Certificados de Aeronavegabilidad Especial son para las:", "options": {"a": "Aeronaves categoría Acrobática.", "b": "Aeronaves categoría Utilitaria.", "c": "Aeronaves categoría Restringida."}, "correct": "c"}, {"id": 28, "question": "Las aeronaves civiles públicas se identifican con marcas de nacionalidad:", "options": {"a": "LV.", "b": "LQ.", "c": "TC."}, "correct": "b"}, {"id": 29, "question": "Cuando se consulta una norma, lo primero a constatar es:", "options": {"a": "El estado de revisión/enmienda.", "b": "La lista de verificación de páginas.", "c": "El índice."}, "correct": "a"}, {"id": 30, "question": "La solicitud para confección de reglas:", "options": {"a": "Deberá contener el nombre del solicitante.", "b": "Podrá ser una solicitud anónima.", "c": "Podrá ser una solicitud de la DNA."}, "correct": "a"}, {"id": 31, "question": "Decir cuál de estas proposiciones es la que se menciona como elegible de un Certificado Tipo:", "options": {"a": "Cualquier persona física puede solicitar un Certificado Tipo.", "b": "Cualquier persona física o jurídica puede solicitar un Certificado Tipo.", "c": "Cualquier persona jurídica puede solicitar un Certificado Tipo."}, "correct": "b"}, {"id": 32, "question": "La certificación tipo para categoría primaria:", "options": {"a": "Es aplicable a aeronaves destinadas a lanzamiento de paracaidistas.", "b": "Es aplicable sólo a aeronaves con capacidad máxima de 2 asientos.", "c": "Es aplicable sólo a aeronaves con capacidad máxima de 4 asientos."}, "correct": "c"}, {"id": 33, "question": "Una aeronave categoría normal no puede realizar:", "options": {"a": "Instrucción de alumnos para el curso de piloto.", "b": "Tareas de fumigación.", "c": "Transporte aéreo no regular."}, "correct": "b"}, {"id": 34, "question": "Determine cuál sentencia es correcta:", "options": {"a": "Una aeronave es necesariamente un avión.", "b": "Un avión es necesariamente una aeronave.", "c": "Un aerodino es necesariamente un helicóptero."}, "correct": "b"}, {"id": 35, "question": "Un Certificado de Aeronavegabilidad Especial experimental es, entre otros, para propósitos de:", "options": {"a": "Vuelo en globos tripulados.", "b": "Competencias aéreas.", "c": "Vuelos acrobáticos."}, "correct": "b"}, {"id": 36, "question": "El mantenimiento preventivo:", "options": {"a": "Incluye inspección.", "b": "No incluye inspección.", "c": "Incluye inspecciones de…"}, "correct": "b"}, {"id": 37, "question": "El Certificado de Aeronavegabilidad provisorio:", "options": {"a": "Se otorgará en caso de tener un Certificado Tipo suplementario provisorio.", "b": "Se otorgará en caso de tener un Certificado Tipo provisorio.", "c": "Se otorgará en caso de tener un Certificado de producción provisorio."}, "correct": "b"}, {"id": 38, "question": "El Certificado de Aeronavegabilidad se extenderá siempre y cuando:", "options": {"a": "Posea un Certificado de Exportación vigente.", "b": "Posea un Certificado de Propiedad vigente.", "c": "Posea un Certificado de Matrícula vigente."}, "correct": "c"}, {"id": 39, "question": "La solicitud para la emisión de un Certificado Tipo para una aeronave debe ir acompañada de:", "options": {"a": "Limitaciones de operación y listado de equipamiento mínimo.", "b": "Plano de tres vistas de la aeronave.", "c": "Ninguna de las anteriores."}, "correct": "b"}, {"id": 40, "question": "Una aeronave categoría primaria:", "options": {"a": "Lleva necesariamente un Certificado de Aeronavegabilidad Experimental.", "b": "Lleva necesariamente un Certificado de Aeronavegabilidad Estándar.", "c": "Lleva necesariamente un Certificado de Aeronavegabilidad Especial."}, "correct": "c"}, {"id": 41, "question": "Una aeronave categoría primaria:", "options": {"a": "Puede ser bimotor de aspiración natural con capacidad total de 4 personas.", "b": "Puede ser monomotor de aspiración natural con capacidad total de 2 personas.", "c": "Puede ser monomotor de aspiración forzada (turbocomprimido) con capacidad total de 4 personas."}, "correct": "b"}, {"id": 42, "question": "La solicitud para certificación tipo de un planeador es efectiva por:", "options": {"a": "No existe extinción.", "b": "Tres años.", "c": "Cinco años."}, "correct": "b"}, {"id": 43, "question": "Cuando existen condiciones novedosas de diseño presentadas por un solicitante de un CT, la autoridad aeronáutica:", "options": {"a": "Se genera una nueva regulación conteniendo esos mismos requerimientos.", "b": "Se emiten condiciones especiales para el solicitante.", "c": "Se enmienda la regulación existente para contemplar ese caso."}, "correct": "b"}, {"id": 44, "question": "Las directivas de aeronavegabilidad del país del poseedor de un certificado tipo:", "options": {"a": "Aplicables mediante la adición de una carátula…", "b": "Aplicables si la Dirección Certificación…", "c": "Aplicables sin la intervención de la Dirección Certificación Aeronáutica."}, "correct": "c"}, {"id": 45, "question": "¿Con qué plazo máximo se puede informar a la ANAC de una falla?", "options": {"a": "24 hs.", "b": "48 hs.", "c": "72 hs."}, "correct": "a"}, {"id": 46, "question": "Un fabricante puede obtener una aprobación de aeronavegabilidad para exportación de un producto clase III, si este posee para el producto:", "options": {"a": "Un sistema de inspección de producción aprobado.", "b": "Un Certificado Tipo clase III.", "c": "Un sistema de inspección correspondiente a un Certificado Tipo aprobado."}, "correct": "a"}, {"id": 47, "question": "Las faltas:", "options": {"a": "Serán sancionadas con apercibimiento o multa.", "b": "Serán sancionadas con reclusión o multa.", "c": "Serán sancionadas con apercibimiento o reclusión."}, "correct": "a"}, {"id": 48, "question": "La aprobación de materiales, partes, procesos y dispositivos no tiene aplicación para:", "options": {"a": "Partes producidas por un propietario u operador para mantener o alterar productos para terceros.", "b": "Partes producidas por un operador o fabricante para mantener o alterar productos para terceros.", "c": "Partes producidas por un propietario u operador para mantener o alterar su propio producto."}, "correct": "c"}, {"id": 49, "question": "¿Una carta de servicio puede ser referenciada en una Directiva de Aeronavegabilidad?", "options": {"a": "Si.", "b": "No.", "c": "No, salvo que en esta carta de servicio se encuentre el texto “Aprobada por la FAA”."}, "correct": "a"}, {"id": 50, "question": "La aprobación de materiales, partes, procesos y dispositivos:", "options": {"a": "Es transferible.", "b": "Es transferible luego de una inspección de la DNA.", "c": "Es intransferible."}, "correct": "c"}, {"id": 51, "question": "Las aeronaves de planos fijos llevan la placa de nacionalidad (RAAC 45):", "options": {"a": "Sobre el intradós en ambos semiplanos.", "b": "Sobre el intradós en el semiplano derecho y en el extradós en el semiplano izquierdo.", "c": "Sobre el extradós en el semiplano derecho y en el intradós en el semiplano izquierdo."}, "correct": "c"}, {"id": 52, "question": "Aeronave grande significa:", "options": {"a": "Aeronave de más de 3700 kg de peso máximo de despegue.", "b": "Aeronave de más de 12500 kg de peso máximo de despegue.", "c": "Aeronave de más de 5700 kg de peso máximo de despegue."}, "correct": "c"}, {"id": 53, "question": "Categoría acrobática:", "options": {"a": "Comprende a aviones para realizar todo tipo de acrobacia.", "b": "Comprende a aviones para uso sin restricciones.", "c": "Comprende a aeronaves para uso sin restricciones."}, "correct": "c"}, {"id": 54, "question": "¿Cuándo se debe solicitar la emisión de un Certificado Tipo Suplementario (C.T.S.):", "options": {"a": "Al realizar una reparación mayor.", "b": "Al realizar una modificación o alteración mayor al diseño tipo.", "c": "Cuando una aeronave se le prevé instalar otra marca de motor y este se encuentra en la Hoja de Datos del Certificado Tipo."}, "correct": "b"}, {"id": 55, "question": "Aeronavegabilidad continuada significa:", "options": {"a": "Procedimientos y acciones que tienden a mantener la operación de motor en forma continuada.", "b": "Procedimientos y acciones que tienden a mantener la aeronavegabilidad de una aeronave en forma continuada.", "c": "Procedimientos y acciones que tienen a mantener la aeronavegabilidad de una aeronave mediante inspecciones anuales regulares."}, "correct": "b"}, {"id": 56, "question": "En los procedimientos para la confección de reglas:", "options": {"a": "Las audiencias públicas son realizadas por disposición del peticionante.", "b": "Las audiencias públicas son realizadas a solicitud del peticionante, por disposición del Director de Aeronavegabilidad.", "c": "No se efectúan audiencias públicas."}, "correct": "b"}, {"id": 57, "question": "Cada persona interesada tiene derecho a participar en los procedimientos de confección de reglas:", "options": {"a": "Solicitando una audiencia pública como norma de procedimiento.", "b": "Presentando una información por escrito de opiniones, criterios o argumentos como norma de procedimiento.", "c": "Exponiendo verbalmente al Director las opiniones, criterios o argumentos como normas de procedimiento."}, "correct": "b"}, {"id": 58, "question": "Existe algún procedimiento adicional para la confección de reglas:", "options": {"a": "Sí, solicitar audiencia pública.", "b": "No.", "c": "Sí, publicar sus opiniones en un diario de consumo masivo."}, "correct": "a"}, {"id": 59, "question": "¿Qué elementos de juicio determinan entre otros la solicitud de reconsideración de una negación a una exención:", "options": {"a": "Que la ANAC descubra que un hecho material es erróneo.", "b": "Que una conclusión legal esencial tiene vigencia o que no es contraria a la ley.", "c": "Que una conclusión legal esencial que no tiene vigencia o que es contraria a la ley."}, "correct": "c"}, {"id": 60, "question": "Si se otorga una exención:", "options": {"a": "Un solicitante que no es el solicitante original puede presentar una solicitud para reconsideración.", "b": "El solicitante original puede presentar una solicitud para reconsideración.", "c": "La ANAC puede presentar una solicitud para reconsiderarla."}, "correct": "a"}, {"id": 61, "question": "¿Cuál de la siguiente documentación no es de tenencia obligatoria a bordo de una aeronave?", "options": {"a": "Manual de procedimientos de operación.", "b": "Certificado de Aeronavegabilidad.", "c": "Certificado de estación radioeléctrica de abordo."}, "correct": "a"}, {"id": 62, "question": "Una aeronave categoría normal no puede realizar:", "options": {"a": "Instrucción de alumnos para piloto.", "b": "Tareas de fumigación.", "c": "Transporte aéreo no regular."}, "correct": "b"}, {"id": 63, "question": "Un Certificado Tipo es emitido para:", "options": {"a": "Un conjunto componente de una aeronave.", "b": "Una hélice para motor de aeronave.", "c": "Equipos radioeléctricos."}, "correct": "b"}, {"id": 64, "question": "¿Cuándo se debe solicitar la emisión de un Certificado Tipo Suplementario:", "options": {"a": "Al realizar una modificación o alteración menor al diseño tipo.", "b": "Al realizar una modificación o alteración mayor al diseño tipo.", "c": "Cuando se modifican la cantidad de motores que propulsan la aeronave."}, "correct": "b"}, {"id": 65, "question": "Las Directivas de Aeronavegabilidad son emitidas por:", "options": {"a": "El fabricante del producto.", "b": "La autoridad aeronáutica.", "c": "El operador del producto."}, "correct": "b"}, {"id": 66, "question": "¿Cuáles de los siguientes cambios requieren la emisión de un nuevo Certificado Tipo?", "options": {"a": "Modificación del número de rotores.", "b": "Instalación de equipo de rociado para fumigación.", "c": "Modificación o agregado de sistemas."}, "correct": "a"}, {"id": 67, "question": "La solicitud para la emisión de un Certificado Tipo para una aeronave debe ir acompañada de:", "options": {"a": "Planos de tres vistas de la aeronave.", "b": "Limitaciones de operación.", "c": "Ninguna de las anteriores."}, "correct": "a"}, {"id": 68, "question": "¿A qué tipo de aeronave le es otorgado un Certificado de Aeronavegabilidad Especial?", "options": {"a": "A las que realizan operaciones de transporte aéreo no regular.", "b": "A las que realizan operaciones especiales de agricultura.", "c": "A las que están afectadas a escuelas de vuelo."}, "correct": "b"}, {"id": 69, "question": "¿A qué tipo de aeronave le es otorgado un Certificado de Aeronavegabilidad Estándar?", "options": {"a": "Aeronaves construidas por aficionados.", "b": "Aquellas que realizan operaciones de transporte aéreo regular.", "c": "Ultralivianos motorizados."}, "correct": "b"}, {"id": 70, "question": "Una aeronave agrícola se encuentra en la categoría:", "options": {"a": "Normal.", "b": "Utilitaria.", "c": "Restringida."}, "correct": "c"}, {"id": 71, "question": "La elaboración participativa de normas establecida por el Decreto N° 1172/03 del 3 de diciembre de 2003 tiene como objeto habilitar un espacio institucional para la expresión de opiniones y propuestas respecto de proyectos de:", "options": {"a": "Normas que regulan las actividades de la aviación civil.", "b": "Normas administrativas y proyectos de ley para ser elevador por el Poder Ejecutivo Nacional al Honorable Congreso de la Nación.", "c": "Ninguna de las anteriores."}, "correct": "b"}, {"id": 72, "question": "Un aeródromo es privado (RAAC 01):", "options": {"a": "Porque su propietario es un particular.", "b": "Porque su propietario es el Estado.", "c": "Porque su uso no es público."}, "correct": "c"}, {"id": 73, "question": "La Parte 21 establece requisitos para:", "options": {"a": "La certificación de ruidos y emisión de gases.", "b": "Solo para emitir aprobaciones: de diseño, de producción y de aeronavegabilidad, y certificados de aeronavegabilidad.", "c": "Para emitir y cambiar aprobaciones: de diseño, de producción y de aeronavegabilidad, y certificados de aeronavegabilidad."}, "correct": "c"}, {"id": 74, "question": "Las DA’s del país poseedor del Certificado Tipo son:", "options": {"a": "Aplicables mediante la adición de una carátula emitida por el Departamento de Certificación Aeronáutica.", "b": "Aplicables si expresamente la Dirección de Aeronavegabilidad lo determina.", "c": "Aplicables cuando son consideradas de cumplimiento mandatorio por la Autoridad de Aviación Civil del país del poseedor del Certificado Tipo."}, "correct": "c"}, {"id": 75, "question": "Causales de pérdida de efectividad del CdA Estándar:", "options": {"a": "Realización de una operación inadecuada.", "b": "Incumplimiento de un Boletín de Servicio del Fabricante no incluido en una DA.", "c": "El mantenimiento y/o mantenimiento preventivo y/o las alteraciones no son efectuadas en acuerdo con las RAAC vigentes."}, "correct": "c"}];
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var LETRAS = ["a", "b", "c", "d", "e"];
+  var APROBACION = 60; // porcentaje mínimo para aprobar
+  var BANCO = (typeof PREGUNTAS !== "undefined") ? PREGUNTAS : [];
 
-// ---------- State ----------
-let sessionQuestions = [];   // array of {id, question, options:[{letter,text}], correct}
-let currentIndex = 0;
-let score = 0;
-let answered = false;
-let wrongLog = []; // {question, chosenText, correctText}
-let chosenCount = 75;
-
-// ---------- Helpers ----------
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
+  // ---------- utilidades ----------
+  function mezclar(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
   }
-  return a;
-}
+  function guardar(k, v) { try { localStorage.setItem("raac-quiz-" + k, JSON.stringify(v)); } catch (e) {} }
+  function leer(k, def) { try { var v = localStorage.getItem("raac-quiz-" + k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function mostrar(id) {
+    ["inicio", "quiz", "resultado"].forEach(function (s) { $(s).hidden = (s !== id); });
+    window.scrollTo(0, 0);
+  }
 
-function buildSession(n){
-  const pool = shuffle(QUESTIONS).slice(0, n);
-  return pool.map(q=>{
-    const letters = ['a','b','c'];
-    const opts = letters.map(l=>({letter:l, text:q.options[l], isCorrect:l===q.correct}));
-    const shuffledOpts = shuffle(opts);
+  // Prepara una pregunta: mezcla sus opciones (las que dicen "anteriores" quedan al final)
+  function preparar(p) {
+    var idx = p.opciones.map(function (_, i) { return i; });
+    var orden;
+    if (p.fijaUltima) {
+      var ult = idx.pop();
+      orden = mezclar(idx).concat([ult]);
+    } else {
+      orden = mezclar(idx);
+    }
     return {
-      id:q.id,
-      question:q.question,
-      opts:shuffledOpts
+      p: p,
+      opciones: orden.map(function (i) { return p.opciones[i]; }),
+      correcta: orden.indexOf(p.correcta),
+      elegida: null
     };
+  }
+
+  // ---------- estado ----------
+  var temas = [];
+  BANCO.forEach(function (p) { if (temas.indexOf(p.tema) === -1) temas.push(p.tema); });
+  var config = leer("config", { cantidad: "todas", temas: temas.slice() });
+  var ronda = [];       // preguntas preparadas
+  var actual = 0;
+  var seleccion = null;
+  var respondida = false;
+  var ultimaFuente = []; // preguntas originales de la última ronda (para "practicar de nuevo")
+
+  // ---------- inicio ----------
+  $("f-total").textContent = BANCO.length;
+  $("f-temas").textContent = temas.length;
+
+  var opcionesCantidad = [10, 20, 30, "todas"];
+  opcionesCantidad.forEach(function (c) {
+    var lab = el("label", "chip");
+    var inp = el("input"); inp.type = "radio"; inp.name = "cantidad"; inp.value = String(c); inp.id = "cant-" + c;
+    if (String(config.cantidad) === String(c)) inp.checked = true;
+    var sp = el("span", null, c === "todas" ? "Todas" : String(c));
+    lab.appendChild(inp); lab.appendChild(sp); $("cantidades").appendChild(lab);
+    inp.addEventListener("change", function () { $("cant-custom").value = ""; actualizarResumen(); });
   });
-}
-
-// ---------- Screens ----------
-const screenStart = document.getElementById('screen-start');
-const screenQuiz = document.getElementById('screen-quiz');
-const screenResults = document.getElementById('screen-results');
-
-function showScreen(el){
-  [screenStart, screenQuiz, screenResults].forEach(s=>s.classList.add('hidden'));
-  el.classList.remove('hidden');
-}
-
-// ---------- Start screen wiring ----------
-document.getElementById('bank-size').textContent = QUESTIONS.length + ' preguntas cargadas';
-
-const countGrid = document.getElementById('count-grid');
-countGrid.addEventListener('click', (e)=>{
-  const btn = e.target.closest('.count-btn');
-  if(!btn) return;
-  countGrid.querySelectorAll('.count-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  chosenCount = parseInt(btn.dataset.n, 10);
-});
-
-document.getElementById('btn-start').addEventListener('click', ()=>{
-  startSession(chosenCount);
-});
-
-function startSession(n){
-  sessionQuestions = buildSession(Math.min(n, QUESTIONS.length));
-  currentIndex = 0;
-  score = 0;
-  wrongLog = [];
-  showScreen(screenQuiz);
-  renderQuestion();
-}
-
-// ---------- Quiz rendering ----------
-const qNumberEl = document.getElementById('q-number');
-const qTextEl = document.getElementById('q-text');
-const optionsEl = document.getElementById('options');
-const folioNumEl = document.getElementById('folio-num');
-const progressFillEl = document.getElementById('progress-fill');
-const scoreChipEl = document.getElementById('score-chip');
-const feedbackTextEl = document.getElementById('feedback-text');
-const nextBtn = document.getElementById('btn-next');
-const stampEl = document.getElementById('stamp');
-
-function pad3(n){ return String(n).padStart(3,'0'); }
-
-function renderQuestion(){
-  answered = false;
-  stampEl.classList.remove('show','ok','no');
-  feedbackTextEl.textContent = '';
-  feedbackTextEl.className = 'feedback-text';
-  nextBtn.classList.remove('show');
-
-  const total = sessionQuestions.length;
-  const q = sessionQuestions[currentIndex];
-
-  qNumberEl.textContent = 'PREGUNTA ' + (currentIndex+1) + ' DE ' + total + '  ·  Nº' + q.id;
-  qTextEl.textContent = q.question;
-  folioNumEl.textContent = 'Legajo ' + pad3(currentIndex+1) + '/' + pad3(total);
-  progressFillEl.style.width = ((currentIndex)/total*100) + '%';
-  scoreChipEl.textContent = score + ' / ' + currentIndex;
-
-  optionsEl.innerHTML = '';
-  q.opts.forEach(opt=>{
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.innerHTML = '<span class="letter">' + opt.letter + '</span><span>' + escapeHtml(opt.text) + '</span>';
-    btn.addEventListener('click', ()=>selectOption(btn, opt, q));
-    optionsEl.appendChild(btn);
+  if (opcionesCantidad.map(String).indexOf(String(config.cantidad)) === -1) $("cant-custom").value = config.cantidad;
+  $("cant-custom").addEventListener("input", function () {
+    if (this.value) document.querySelectorAll('input[name="cantidad"]').forEach(function (r) { r.checked = false; });
+    actualizarResumen();
   });
-}
 
-function escapeHtml(str){
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
+  temas.forEach(function (t, i) {
+    var lab = el("label", "chip");
+    var inp = el("input"); inp.type = "checkbox"; inp.value = t; inp.id = "tema-" + i;
+    inp.checked = !config.temas || config.temas.indexOf(t) !== -1;
+    var n = BANCO.filter(function (p) { return p.tema === t; }).length;
+    var nombre = t;
+    lab.appendChild(inp); lab.appendChild(el("span", null, nombre + " · " + n));
+    $("temas").appendChild(lab);
+    inp.addEventListener("change", actualizarResumen);
+  });
+  $("temas-todos").addEventListener("click", function () { document.querySelectorAll("#temas input").forEach(function (c) { c.checked = true; }); actualizarResumen(); });
+  $("temas-ninguno").addEventListener("click", function () { document.querySelectorAll("#temas input").forEach(function (c) { c.checked = false; }); actualizarResumen(); });
 
-function selectOption(btn, opt, q){
-  if(answered) return;
-  answered = true;
+  function leerFormulario() {
+    var elegidos = Array.prototype.map.call(document.querySelectorAll("#temas input:checked"), function (c) { return c.value; });
+    var pool = BANCO.filter(function (p) { return elegidos.indexOf(p.tema) !== -1; });
+    var custom = parseInt($("cant-custom").value, 10);
+    var radio = document.querySelector('input[name="cantidad"]:checked');
+    var cantidad = custom > 0 ? custom : (radio ? radio.value : "todas");
+    var n = cantidad === "todas" ? pool.length : Math.min(parseInt(cantidad, 10), pool.length);
+    return { temas: elegidos, pool: pool, cantidad: cantidad, n: n };
+  }
+  function actualizarResumen() {
+    var f = leerFormulario();
+    $("btn-empezar").disabled = f.n === 0;
+    $("resumen-inicio").textContent = f.pool.length === 0 ? "Elegí al menos un tema." :
+      f.n + " de " + f.pool.length + " preguntas disponibles, en orden aleatorio.";
+  }
+  actualizarResumen();
 
-  const allBtns = optionsEl.querySelectorAll('.opt');
-  allBtns.forEach(b=>b.disabled = true);
+  $("form-inicio").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var f = leerFormulario();
+    if (!f.n) return;
+    guardar("config", { cantidad: f.cantidad, temas: f.temas });
+    empezar(mezclar(f.pool).slice(0, f.n));
+  });
 
-  if(opt.isCorrect){
-    btn.classList.add('correct');
-    score++;
-    feedbackTextEl.textContent = 'Correcto';
-    feedbackTextEl.classList.add('ok');
-    stampEl.textContent = 'CORRECTO';
-    stampEl.classList.add('ok');
-  } else {
-    btn.classList.add('wrong');
-    feedbackTextEl.textContent = 'Incorrecto';
-    feedbackTextEl.classList.add('no');
-    stampEl.textContent = 'INCORRECTO';
-    stampEl.classList.add('no');
-    // reveal correct one
-    const correctOpt = q.opts.find(o=>o.isCorrect);
-    const correctBtn = Array.from(allBtns).find(b=>b.textContent.trim().startsWith(correctOpt.letter));
-    if(correctBtn) correctBtn.classList.add('correct');
+  // ---------- quiz ----------
+  function empezar(preguntas) {
+    ultimaFuente = preguntas.slice();
+    ronda = mezclar(preguntas).map(preparar);
+    actual = 0;
+    mostrar("quiz");
+    pintarPregunta();
+  }
 
-    wrongLog.push({
-      question:q.question,
-      chosenText: opt.letter.toUpperCase() + ') ' + opt.text,
-      correctText: correctOpt.letter.toUpperCase() + ') ' + correctOpt.text
+  function pintarPregunta() {
+    var q = ronda[actual];
+    seleccion = null; respondida = false;
+    var total = ronda.length;
+    var pad = String(total).length < 2 ? 2 : String(total).length;
+    var num = String(actual + 1); while (num.length < pad) num = "0" + num;
+    $("q-plate").innerHTML = "LV-<b>" + num + "</b>/" + total;
+    $("q-bar").style.width = (actual / total * 100) + "%";
+    pintarScore();
+    $("q-tema").textContent = q.p.tema;
+    $("q-badge").hidden = true;
+    $("q-texto").textContent = q.p.pregunta;
+    var cont = $("q-opts"); cont.innerHTML = "";
+    q.opciones.forEach(function (txt, i) {
+      var b = el("button", "opt"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", "false");
+      b.appendChild(el("span", "letter", LETRAS[i]));
+      b.appendChild(el("span", null, txt));
+      b.addEventListener("click", function () { elegir(i); });
+      cont.appendChild(b);
     });
+    $("q-feedback").hidden = true;
+    var acc = $("btn-accion"); acc.textContent = "Responder"; acc.disabled = true;
   }
 
-  allBtns.forEach(b=>{ if(!b.classList.contains('correct') && !b.classList.contains('wrong')) b.classList.add('dim'); });
-
-  requestAnimationFrame(()=>{ stampEl.classList.add('show'); });
-
-  scoreChipEl.textContent = score + ' / ' + (currentIndex+1);
-  progressFillEl.style.width = ((currentIndex+1)/sessionQuestions.length*100) + '%';
-
-  nextBtn.classList.add('show');
-  nextBtn.focus();
-}
-
-nextBtn.addEventListener('click', ()=>{
-  currentIndex++;
-  if(currentIndex >= sessionQuestions.length){
-    showResults();
-  } else {
-    renderQuestion();
+  function pintarScore() {
+    var ok = 0, bad = 0;
+    ronda.forEach(function (q) { if (q.elegida != null) { if (q.elegida === q.correcta) ok++; else bad++; } });
+    $("q-score").innerHTML = '<span class="ok">✓ ' + ok + '</span> · <span class="bad">✗ ' + bad + '</span>';
   }
-});
 
-// keyboard shortcuts: 1/2/3 or a/b/c to answer, Enter to advance
-document.addEventListener('keydown', (e)=>{
-  if(screenQuiz.classList.contains('hidden')) return;
-  if(!answered){
-    const key = e.key.toLowerCase();
-    const map = {'1':0,'2':1,'3':2,'a':0,'b':1,'c':2};
-    if(key in map){
-      const btns = optionsEl.querySelectorAll('.opt');
-      const idx = map[key];
-      if(btns[idx]) btns[idx].click();
-    }
-  } else if(e.key === 'Enter' || e.key === ' '){
-    if(nextBtn.classList.contains('show')){
-      e.preventDefault();
-      nextBtn.click();
-    }
-  }
-});
-
-// ---------- Results ----------
-const resultPct = document.getElementById('result-pct');
-const resultRing = document.getElementById('result-ring');
-const resultVerdict = document.getElementById('result-verdict');
-const resultSubline = document.getElementById('result-subline');
-const reviewList = document.getElementById('review-list');
-const reviewWrap = document.getElementById('review-wrap');
-
-function showResults(){
-  const total = sessionQuestions.length;
-  const pct = Math.round((score/total)*100);
-  const pass = pct >= 70;
-
-  resultPct.textContent = pct + '%';
-  resultRing.className = 'ring ' + (pass ? 'pass':'fail');
-  resultVerdict.textContent = pass ? 'Aprobado' : 'A repasar';
-  resultVerdict.className = 'verdict ' + (pass ? 'pass':'fail');
-  resultSubline.textContent = score + ' correctas de ' + total + ' preguntas';
-
-  reviewWrap.innerHTML = '';
-  if(wrongLog.length === 0){
-    reviewWrap.innerHTML = '<p class="all-correct">Todas las respuestas fueron correctas. Buen trabajo.</p>';
-  } else {
-    const title = document.createElement('p');
-    title.className = 'review-title';
-    title.textContent = 'Preguntas para repasar (' + wrongLog.length + ')';
-    reviewWrap.appendChild(title);
-    const list = document.createElement('div');
-    list.className = 'review-list';
-    wrongLog.forEach(w=>{
-      const item = document.createElement('div');
-      item.className = 'review-item';
-      item.innerHTML =
-        '<p class="rq">' + escapeHtml(w.question) + '</p>' +
-        '<div class="ra"><span class="you">✗ Tu respuesta: ' + escapeHtml(w.chosenText) + '</span><br>' +
-        '<span class="ok">✓ Correcta: ' + escapeHtml(w.correctText) + '</span></div>';
-      list.appendChild(item);
+  function elegir(i) {
+    if (respondida) return;
+    seleccion = i;
+    Array.prototype.forEach.call($("q-opts").children, function (b, j) {
+      b.classList.toggle("sel", j === i);
+      b.setAttribute("aria-checked", j === i ? "true" : "false");
     });
-    reviewWrap.appendChild(list);
+    $("btn-accion").disabled = false;
   }
 
-  showScreen(screenResults);
-}
+  function responder() {
+    if (respondida || seleccion == null) return;
+    var q = ronda[actual];
+    q.elegida = seleccion; respondida = true;
+    var bien = seleccion === q.correcta;
+    Array.prototype.forEach.call($("q-opts").children, function (b, j) {
+      b.disabled = true; b.classList.remove("sel");
+      if (j === q.correcta) b.classList.add("correct");
+      else if (j === seleccion) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+    var fb = $("q-feedback"); fb.innerHTML = "";
+    fb.className = "feedback " + (bien ? "ok" : "bad");
+    fb.appendChild(el("strong", null, bien ? "Correcta" : "Incorrecta"));
+    if (!bien) fb.appendChild(el("p", null, "La correcta es la " + LETRAS[q.correcta] + "), marcada en verde."));
+    (q.p.notas || []).forEach(function (n) { fb.appendChild(el("p", "note muted", n)); });
+    fb.hidden = false;
+    var badges = {
+      corregida: ["Corregida según la norma", "El banco marcaba otra respuesta; se corrigió después de verificarla en la RAAC."],
+      investigada: ["Respuesta investigada", "La respuesta se completó buscando en la norma."],
+      noconfirmada: ["No confirmada en la norma", "No se encontró en la RAAC vigente; se deja la respuesta del banco."]
+    };
+    var bd = badges[q.p.estado];
+    $("q-badge").hidden = !bd;
+    if (bd) { $("q-badge").textContent = bd[0]; $("q-badge").title = bd[1]; }
+    pintarScore();
+    $("q-bar").style.width = ((actual + 1) / ronda.length * 100) + "%";
+    var acc = $("btn-accion");
+    acc.textContent = actual + 1 < ronda.length ? "Siguiente" : "Ver resultado";
+    acc.disabled = false; acc.focus({ preventScroll: true });
+  }
 
-document.getElementById('btn-retry').addEventListener('click', ()=>{
-  // same question set & order, reshuffle options only
-  sessionQuestions = sessionQuestions.map(q=>({...q, opts: shuffle(q.opts)}));
-  currentIndex = 0;
-  score = 0;
-  wrongLog = [];
-  showScreen(screenQuiz);
-  renderQuestion();
-});
+  function siguiente() {
+    if (actual + 1 < ronda.length) { actual++; pintarPregunta(); window.scrollTo(0, 0); }
+    else terminar();
+  }
 
-document.getElementById('btn-restart').addEventListener('click', ()=>{
-  showScreen(screenStart);
-});
+  $("btn-accion").addEventListener("click", function () { respondida ? siguiente() : responder(); });
+  $("btn-salir").addEventListener("click", function () {
+    if (ronda.some(function (q) { return q.elegida != null; })) terminar();
+    else mostrar("inicio");
+  });
+
+  document.addEventListener("keydown", function (ev) {
+    if ($("quiz").hidden || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var k = ev.key.toLowerCase();
+    var n = ronda[actual] ? ronda[actual].opciones.length : 0;
+    if (k === "enter") {
+      ev.preventDefault();
+      if (respondida) siguiente(); else responder();
+      return;
+    }
+    if (respondida) return;
+    var i = "123456789".indexOf(k);
+    if (i === -1) i = LETRAS.indexOf(k);
+    if (i !== -1 && i < n) { ev.preventDefault(); elegir(i); return; }
+    if (k === "arrowdown" || k === "arrowright") { ev.preventDefault(); elegir(seleccion == null ? 0 : (seleccion + 1) % n); }
+    if (k === "arrowup" || k === "arrowleft") { ev.preventDefault(); elegir(seleccion == null ? n - 1 : (seleccion - 1 + n) % n); }
+  });
+
+  // ---------- resultado ----------
+  function terminar() {
+    var hechas = ronda.filter(function (q) { return q.elegida != null; });
+    var ok = hechas.filter(function (q) { return q.elegida === q.correcta; }).length;
+    var total = hechas.length;
+    var pct = total ? Math.round(ok / total * 100) : 0;
+    var aprobo = pct >= APROBACION;
+    $("r-stamp").textContent = aprobo ? "Aprobaste" : "No aprobaste";
+    $("r-stamp").className = "stamp " + (aprobo ? "ok" : "bad");
+    $("r-frase").textContent = "Respondiste bien " + ok + " de " + total + " preguntas" +
+      (total < ronda.length ? " (terminaste antes, quedaron " + (ronda.length - total) + " sin responder)" : "") +
+      ". Para aprobar necesitás " + APROBACION + "% o más.";
+    $("r-pct").textContent = pct + "%";
+    $("r-ok").textContent = ok;
+    $("r-bad").textContent = total - ok;
+
+    var malas = hechas.filter(function (q) { return q.elegida !== q.correcta; });
+    var rev = $("r-review"); rev.innerHTML = "";
+    $("r-review-card").hidden = malas.length === 0;
+    malas.forEach(function (q) {
+      var it = el("div", "review-item");
+      it.appendChild(el("span", "eyebrow", q.p.tema));
+      it.appendChild(el("p", "q", q.p.pregunta));
+      it.appendChild(el("p", "mine", "✗ Tu respuesta: " + q.opciones[q.elegida]));
+      it.appendChild(el("p", "good", "✓ Correcta: " + q.opciones[q.correcta]));
+      rev.appendChild(it);
+    });
+    $("btn-falladas").hidden = malas.length === 0;
+    $("btn-falladas").onclick = function () { empezar(malas.map(function (q) { return q.p; })); };
+    mostrar("resultado");
+  }
+  // "Practicar de nuevo": nueva tanda al azar con la misma cantidad y temas elegidos al inicio
+  $("btn-repetir").addEventListener("click", function () {
+    var f = leerFormulario();
+    if (f.n) empezar(mezclar(f.pool).slice(0, f.n)); else empezar(ultimaFuente);
+  });
+  $("btn-config").addEventListener("click", function () { mostrar("inicio"); actualizarResumen(); });
+
+  if (!BANCO.length) { $("resumen-inicio").textContent = "No se encontró el archivo preguntas.js."; $("btn-empezar").disabled = true; }
+})();
 </script>
 </body>
 </html>
